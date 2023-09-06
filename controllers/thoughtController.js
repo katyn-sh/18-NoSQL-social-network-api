@@ -1,13 +1,13 @@
 const { User, Thought } = require('../models');
 
 module.exports = {
-
+  // Grab all thoughts
   getAllThoughts(req, res) {
     Thought.find()
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
-
+  // Get single thought
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')
@@ -18,7 +18,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
- 
+  // Create new thought
   async createNewThought(req, res) {
     try {
       const newThought = await Thought.create(req.body);
@@ -33,7 +33,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-
+  //Update existing thought
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -47,7 +47,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-
+  // Remove existing thought
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) => {
@@ -63,7 +63,7 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-
+  //   addReaction
   async addReaction(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
@@ -77,7 +77,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-
+  //   deleteReaction;
   async deleteReaction(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(

@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 const dayjs = require('dayjs');
 
+//Schema to create a thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -13,6 +14,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      // Use a getter method to format the timestamp on query
       get: (createdDate) => {
         try {
           return dayjs(createdDate).format('DD/MM/YYYY');
@@ -37,6 +39,7 @@ const thoughtSchema = new Schema(
   { timestamps: true }
 );
 
+// Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
